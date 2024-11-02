@@ -7,6 +7,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -242,6 +244,29 @@ public class InventoryPage extends BasePage{
         return productNames;
     }
 
+    public List<String> getAToZSortedItemList(){
+        List<WebElement> availableItems = inventoryItemNames;
+        List<String> productNames = availableItems.stream()
+                .map(WebElement::getText)
+                .sorted()
+                .collect(Collectors.toList());
+       return productNames;
+    }
+
+    public List<String> getZToASortedList(){
+        List<WebElement> availableItems = inventoryItemNames;
+        List<String> productNames = availableItems.stream()
+                .map(WebElement::getText)
+                .collect(Collectors.toList());
+        List<String> sortedProductNames = new ArrayList<>(productNames);
+        sortedProductNames.sort(Comparator.reverseOrder());
+        return sortedProductNames;
+    }
+
+    public boolean isItemListEmpty(){
+      return getTotalAvailableItemListByItemName().isEmpty();
+    }
+
     public void clickOnAvailableAllAddToCartButtonElementsInInventoryPage() {
 
         // Loop through each button and click it
@@ -250,22 +275,49 @@ public class InventoryPage extends BasePage{
         }
     }
 
+    public boolean isAlreadyAddedItemsAvailable(){
+        if(RemoveButtonsList.isEmpty()){
+            return false;
+        }
+        return true;
+    }
+
+    public int getAvailableRemoveBtnCount(){
+       return RemoveButtonsList.size();
+    }
+
     public void clickOnAvailableAllRemoveButtons(){
         for(WebElement button : RemoveButtonsList){
             button.click();
         }
     }
 
+    public List<Double> extractItemPrices(){
+        return inventoryItemNames.stream()
+                .map(price -> price.getText().replace("$", ""))
+                .map(Double::parseDouble)
+                .collect(Collectors.toList());
+    }
+
     public List<Double> getTotalAvailableItemPriceListByItemPrice() {
-        List<WebElement> availableItems = inventoryItemNames;
-        List<Double> displayedItemPrices = new ArrayList<>();
-        for (WebElement price : availableItems) {
-            String priceText = price.getText().replace("$", "");
-            displayedItemPrices.add(Double.parseDouble(priceText));
-            return displayedItemPrices;
-        }
+        return extractItemPrices();
+    }
+
+    public List<Double> getItemListFromLowToHighPrice(){
+        List<Double> displayedItemPrices = extractItemPrices();
+        displayedItemPrices.sort(Comparator.naturalOrder());
         return displayedItemPrices;
     }
+
+//    public List<Double> getTotalAvailableItemPriceListByItemPrice() {
+//        List<WebElement> availableItems = inventoryItemNames;
+//        List<Double> displayedItemPrices = new ArrayList<>();
+//        for (WebElement price : availableItems) {
+//            String priceText = price.getText().replace("$", "");
+//            displayedItemPrices.add(Double.parseDouble(priceText));
+//        }
+//        return displayedItemPrices;
+//    }
 
     public void sortOrFilterProductsFromAtoZByName(){
         Select select = new Select(dropDownBtn);
