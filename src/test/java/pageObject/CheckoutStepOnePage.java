@@ -1,5 +1,6 @@
 package pageObject;
 
+import org.jspecify.annotations.Nullable;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,6 +10,8 @@ public class CheckoutStepOnePage extends BasePage{
     public CheckoutStepOnePage(WebDriver driver) {
         super(driver);
     }
+
+   final private String checkoutStepOnePageUrl = "https://www.saucedemo.com/checkout-step-one.html";
 
     //Locators
     @FindBy(xpath = "//span[text() ='Checkout: Your Information']")
@@ -30,6 +33,10 @@ public class CheckoutStepOnePage extends BasePage{
     WebElement cancelBtnOnCheckOutStepOnePage;
 
     //Actions
+
+    public String getCurrentPageUrl(){
+        return driver.getCurrentUrl();
+    }
     public boolean isCheckOutStepOnePageTitleDisplay(){
         return checkOutStepOnePageTitle.isDisplayed();
     }

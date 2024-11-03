@@ -309,6 +309,12 @@ public class InventoryPage extends BasePage{
         return displayedItemPrices;
     }
 
+    public List<Double> getItemListFromHighToLowPrice(){
+        List<Double> displayedItemPrices = extractItemPrices();
+        displayedItemPrices.sort(Comparator.reverseOrder());
+        return displayedItemPrices;
+    }
+
 //    public List<Double> getTotalAvailableItemPriceListByItemPrice() {
 //        List<WebElement> availableItems = inventoryItemNames;
 //        List<Double> displayedItemPrices = new ArrayList<>();

@@ -40,6 +40,13 @@ public class CheckoutStepTwoPage extends BasePage{
         return checkOutStepOnePageFinishBtn.isDisplayed();
     }
 
+    public String getCurrentPageUrl(){
+       return driver.getCurrentUrl();
+    }
+
+    public String getCheckoutStepTwoPageTitle(){
+        return checkOutStepOnePageTitle.getText();
+    }
 
     public String getCheckOutStepOnePageTitle(){
         return checkOutStepOnePageTitle.getText();

@@ -21,6 +21,10 @@ public class CartBadge extends BasePage{
         return addToCartBtn.isDisplayed();
     }
 
+    public void clickOnAddToCartBtn(){
+        addToCartBtn.click();
+    }
+
     public boolean isShoppingCartBadgeDisplay(){
         return shoppingCartBadge.isDisplayed();
     }

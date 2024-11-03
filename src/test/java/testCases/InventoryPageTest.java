@@ -3,13 +3,11 @@ package testCases;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageObject.CartBadge;
-import pageObject.InventoryPage;
 import pageObject.Item1Page;
-import pageObject.LoginPage;
 
 import java.util.List;
 
-public class AddToCartTest extends LoginTest{
+public class InventoryPageTest extends LoginTest{
     protected CartBadge cartBadge;
     protected Item1Page item1Page;
     private int cartBadgeValueBefore;
@@ -400,6 +398,7 @@ public class AddToCartTest extends LoginTest{
         logger.info("************ TC_2.10 Test case finished. ***************");
     }
 
+    @Test(priority = 11)
     public void verifyUserSortProductsFromLowToHighPrice(){
         logger.info("************** TC_2.12 Started *************");
         logger.info("Test Case: Validate that user sort/filter products From Low to High price.");
@@ -413,24 +412,52 @@ public class AddToCartTest extends LoginTest{
             //Check Products are already in Low Price to High Price format or not
             List<Double> ExpectedPriceList = inventoryPage.getItemListFromLowToHighPrice();
             boolean IsListInLowPriceToHigh = ExpectedPriceList.equals(list1);
+            Assert.assertEquals(IsListInLowPriceToHigh,false,"Products are display according to Low to High price format");
+            //select Price(Low to High)
+            logger.info("Selecting Price(Low to High) option from drop down");
+            inventoryPage.sortOrFilterProductsFromLowPriceToHighPrice();
+            List<String> listAfterSortFromLowToHighPrice = inventoryPage.getTotalAvailableItemListByItemName();
+            IsListInLowPriceToHigh = ExpectedPriceList.equals(listAfterSortFromLowToHighPrice);
             Assert.assertEquals(IsListInLowPriceToHigh,true,"Products are not display after select on Price(Low to High) option from drop down");
             logger.info("Products are sorted according to Low price to High price");
             logger.info("TC_2.11 Test Case Passed");
         }catch(Exception e){
-            logger.info("Failed to Sort products from A to Z format.");
+            logger.info("Failed to Sort products from low price to High format.");
             logger.info("TC_2.12 Test case failed");
             logger.error("Exception encountered: ", e);
         }
         logger.info("************ TC_2.12 Test case finished. ***************");
     }
 
-
-
-
-
-
-
-
-
+    @Test(priority = 12)
+    public void verifyUserSortProductsFromHighToLowPrice(){
+        logger.info("************** TC_2.13 Started *************");
+        logger.info("Test Case: Validate that user sort/filter products From High to Low price.");
+        try{
+            //check products are available in inventory page
+            Assert.assertEquals(inventoryPage.isItemListEmpty(),false,"Products are not available in Inventory.html page");
+            logger.info("Products are available in Inventory page.");
+            //get available item list
+            List<Double> list1 = inventoryPage.getTotalAvailableItemPriceListByItemPrice();
+            logger.info("Available Products before sorting format into Low Price to High Price format:" + list1);
+            //Check Products are already in High Price to Low Price format or not
+            List<Double> expectedPriceList = inventoryPage.getItemListFromHighToLowPrice();
+            boolean IsListInHighPriceToLow = expectedPriceList.equals(list1);
+            Assert.assertEquals(IsListInHighPriceToLow,false,"Products are display according to High to Low price format");
+            //select Price(High to Low)
+            logger.info("Selecting Price(High to Low) option from drop down");
+            inventoryPage.sortOrFilterProductsFromLowPriceToHighPrice();
+            List<String> listAfterSortFromHighToLowPrice = inventoryPage.getTotalAvailableItemListByItemName();
+            IsListInHighPriceToLow = expectedPriceList.equals(listAfterSortFromHighToLowPrice);
+            Assert.assertEquals(IsListInHighPriceToLow,true,"Products are not display after select on Price(High to Low) option from drop down");
+            logger.info("Products are sorted according to High price to Low price");
+            logger.info("TC_2.13 Test Case Passed");
+        }catch(Exception e){
+            logger.info("Failed to Sort products from A to Z format.");
+            logger.info("TC_2.13 Test case failed");
+            logger.error("Exception encountered: ", e);
+        }
+        logger.info("************ TC_2.13 Test case finished. ***************");
+    }
 
 }

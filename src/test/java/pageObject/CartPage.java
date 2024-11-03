@@ -9,6 +9,9 @@ public class CartPage extends BasePage{
         super(driver);
     }
 
+
+    final String pageUrl = "https://www.saucedemo.com/cart.html";
+    final String YourCartPageTitle = "Your Cart";
     //Locators
     @FindBy(className = "title")
     WebElement cartPageTitle;
