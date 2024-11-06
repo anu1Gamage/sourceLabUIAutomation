@@ -4,6 +4,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 public class CheckoutStepTwoPage extends BasePage{
     public CheckoutStepTwoPage(WebDriver driver) {
         super(driver);
@@ -11,7 +16,7 @@ public class CheckoutStepTwoPage extends BasePage{
 
     //Locators
     @FindBy(xpath = "//span[text() ='Checkout: Overview']")
-    WebElement checkOutStepOnePageTitle;
+    WebElement checkOutStepTwoPageTitle;
 
     @FindBy(xpath = "//div[@data-test = 'subtotal-label']")
     WebElement ItemsTotalPrice;
@@ -22,34 +27,70 @@ public class CheckoutStepTwoPage extends BasePage{
     @FindBy(xpath = "//div[@data-test = 'total-label']")
     WebElement totalPrice;
 
+    @FindBy(xpath = "//div[@class = 'inventory_item_price']")
+    List<WebElement> productsPrice;
+
     @FindBy(id = "finish")
-    WebElement checkOutStepOnePageFinishBtn;
+    WebElement checkOutStepTwoPageFinishBtn;
 
     @FindBy(id = "cancel")
-    WebElement checkOutStepOnePageCancelBtn;
+    WebElement checkOutStepTwoPageCancelBtn;
 
     //Action
-    public boolean isCheckOutStepOnePageTitleDisplay(){
-        return checkOutStepOnePageTitle.isDisplayed();
+    public boolean isCheckOutStepTwoPageTitleDisplay(){
+        return checkOutStepTwoPageTitle.isDisplayed();
     }
-    public boolean isCheckOutStepOnePageCancelBtnDisplay(){
-        return checkOutStepOnePageCancelBtn.isDisplayed();
+    public boolean isCheckOutStepTwoPageCancelBtnDisplay(){
+        return checkOutStepTwoPageCancelBtn.isDisplayed();
     }
 
-    public boolean isCheckOutStepOnePageFinishBtnDisplay(){
-        return checkOutStepOnePageFinishBtn.isDisplayed();
+    public boolean isCheckOutStepTwoPageFinishBtnDisplay(){
+        return checkOutStepTwoPageFinishBtn.isDisplayed();
     }
 
     public String getCurrentPageUrl(){
        return driver.getCurrentUrl();
     }
 
-    public String getCheckoutStepTwoPageTitle(){
-        return checkOutStepOnePageTitle.getText();
+    public List<Double> extractItemPrices(){
+        return productsPrice.stream()
+                .map(price -> price.getText().replace("$", ""))
+                .map(Double::parseDouble)
+                .collect(Collectors.toList());
     }
 
-    public String getCheckOutStepOnePageTitle(){
-        return checkOutStepOnePageTitle.getText();
+    Map<String, Double> itemTaxRates  = Map.of(
+            "29.9", 2.40,
+            "9.99", 0.80,
+            "15.99", 1.28,
+            "49.99", 4.00,
+            "7.99",0.64,
+            "15.99", 1.28
+    );
+
+    private List<String> productIds = List.of( "29.9","9.99","15.99","49.99","7.99", "15.99");
+    public double calculateTotalTax() {
+            double totalTax = 0;
+            List<Double> itemPrices = extractItemPrices();
+            for (int i = 0; i < itemPrices.size(); i++) {
+                String productId = productIds.get(i);  // Get the product ID for the current item
+                double taxRate = itemTaxRates.getOrDefault(productId, 0.0);  // Get the tax rate from the map
+                totalTax += taxRate;
+            }
+            return totalTax;
+        }
+
+    public double calculateTotalPriceInCartItems(){
+        double sum = 0;
+        List<Double> prices = extractItemPrices();
+        for(double price : prices){
+            sum += price;
+        }
+        return sum;
+    }
+
+    public String getCheckoutStepTwoPageTitle(){
+        return checkOutStepTwoPageTitle.getText();
     }
 
     public double getItemsTotalPrice(){
@@ -65,10 +106,10 @@ public class CheckoutStepTwoPage extends BasePage{
     }
 
     public void clickOnCancelBtn(){
-        checkOutStepOnePageCancelBtn.click();
+        checkOutStepTwoPageCancelBtn.click();
     }
 
-    public void clickOnCheckOutStepOnePageFinishBtn(){
-        checkOutStepOnePageFinishBtn.click();
+    public void clickOnCheckOutStepTwoPageFinishBtn(){
+        checkOutStepTwoPageFinishBtn.click();
     }
 }

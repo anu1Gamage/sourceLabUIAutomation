@@ -22,14 +22,24 @@ public class CheckoutCompletePage extends BasePage{
     @FindBy(xpath = "//img[@data-test = 'pony-express']")
     WebElement checkOutCompleteIcon;
 
+    @FindBy(xpath = "//div[@data-test = 'complete-text']")
+    WebElement checkoutCompletionParagraph;
+
 
     //Actions
+    public String getCheckoutCompletePageUrl(){
+        return driver.getCurrentUrl();
+    }
     public boolean isCheckOutCompletePageTitleDisplay(){
         return checkOutCompletePageTitle.isDisplayed();
     }
 
     public boolean isCheckOutCompletePageCompleteHeaderDisplay(){
         return checkOutCompletePageCompleteHeader.isDisplayed();
+    }
+
+    public String getCheckOutCompletePageHeader(){
+        return checkOutCompletePageCompleteHeader.getText();
     }
 
     public boolean isCheckOutCompletePageBackToProductBtnDisplay(){
@@ -44,7 +54,8 @@ public class CheckoutCompletePage extends BasePage{
         checkOutCompletePageBackToProductBtn.click();
     }
 
-
-
+    public String getCheckoutCompletionParagraph(){
+        return checkoutCompletionParagraph.getText();
+    }
 
 }

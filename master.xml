@@ -13,7 +13,7 @@
 
         <classes>
             <!-- class name="testCases.TC_1_1_RegistrationTest"/ -->
-            <class name = "testCases.AddToCartTest" />
+            <class name = "testCases.InventoryPageTest" />
             <!-- You can add more test classes here -->
         </classes>
 

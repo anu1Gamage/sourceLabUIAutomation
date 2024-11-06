@@ -88,6 +88,26 @@ public class DataProviders{
     }
 
 
+    //method 4 - User Information for Order Checkout
+    @DataProvider(name = "userCheckoutInfo")
+    public static Object[][] getUserCheckoutInfo(){
+        return new Object[][]{
+                //provide first,last name and postal code
+                {"jone","jone","AD100023"},
+                //fist and last name , postal code not given
+                {"jone","jone",null},
+                //only first name and postal code provided
+                {"jone",null,"AD100023"},
+                //lastname and postal code provided
+                {null,"jone","AD100023"},
+                //first ,last names and postal code not provided
+                {null,null,null},
+                //Empty strings
+                {"","",""}
+        };
+    }
+
+
 
     }
 
