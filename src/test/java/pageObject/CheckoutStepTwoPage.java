@@ -14,6 +14,9 @@ public class CheckoutStepTwoPage extends BasePage{
         super(driver);
     }
 
+    final public String checkoutStepTwoPageUrl = "https://www.saucedemo.com/checkout-step-two.html";
+    final public String getCheckoutStepTwoPageUrlTitle = "Checkout: Overview";
+
     //Locators
     @FindBy(xpath = "//span[text() ='Checkout: Overview']")
     WebElement checkOutStepTwoPageTitle;

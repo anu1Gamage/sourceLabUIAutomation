@@ -44,6 +44,16 @@ public class ProductOrderingTest extends LoginTest {
     }
 
 
+    public void verifyUserOrderMultipleItems(String firstName, String lastName, String postalCode){
+        logger.info("**************** TC_2.16 Test Case Started *****************");
+        logger.info("Test Case: Validate that user order multiple items and successfully checkout.");
+        try{
+            
+        }catch(Exception e){
+
+        }
+    }
+
 
 
 
@@ -88,7 +98,7 @@ public class ProductOrderingTest extends LoginTest {
     }
 
     private void navigateToCart() {
-        cartBadge.clickOnAddToCartBtn();
+        cartBadge.clickOnCartBtn();
         Assert.assertEquals(cartPage.getCartPageCurrentUrl(), "https://www.saucedemo.com/cart.html", "Not redirected to cart.html page.");
         Assert.assertEquals(cartPage.getCartPageTitle(), "Your Cart", "Incorrect title displayed on the cart page.");
     }

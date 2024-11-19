@@ -9,8 +9,11 @@ public class CheckoutCompletePage extends BasePage{
         super(driver);
     }
 
+    public final String completePageHeader = "Thank you for your order!";
+    public final String completePagePara = "Your order has been dispatched, and will arrive just as fast as the pony can get there!";
+
     //Locators
-    @FindBy(xpath = "//span[@ddata-test = 'title']")
+    @FindBy(xpath = "//span[@data-test = 'title']")
     WebElement checkOutCompletePageTitle;
 
     @FindBy(xpath = "//h2[@data-test = 'complete-header']")

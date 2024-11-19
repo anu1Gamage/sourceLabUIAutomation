@@ -11,7 +11,8 @@ public class CheckoutStepOnePage extends BasePage{
         super(driver);
     }
 
-   final private String checkoutStepOnePageUrl = "https://www.saucedemo.com/checkout-step-one.html";
+   final public String checkoutStepOnePageUrl = "https://www.saucedemo.com/checkout-step-one.html";
+   final public String getCheckoutStepOnePageUrlTitle = "Checkout: Your Information";
 
     //Locators
     @FindBy(xpath = "//span[text() ='Checkout: Your Information']")
@@ -67,6 +68,10 @@ public class CheckoutStepOnePage extends BasePage{
 
     public void clickOnCheckOutStepOnePageContinueBtn(){
         continueBtnOnCheckOutStepOnePage.click();
+    }
+
+    public void clickOnCheckOutStepOnePageCancelBtn(){
+        cancelBtnOnCheckOutStepOnePage.click();
     }
 
 }

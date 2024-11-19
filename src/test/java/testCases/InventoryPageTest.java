@@ -1,35 +1,46 @@
 package testCases;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pageObject.CartBadge;
+import pageObject.InventoryPage;
 import pageObject.Item1Page;
-
 import java.util.List;
+import java.util.NoSuchElementException;
+
 
 public class InventoryPageTest extends LoginTest{
     protected CartBadge cartBadge;
+    protected InventoryPage inventoryPage;
     protected Item1Page item1Page;
     private int cartBadgeValueBefore;
     private int cartBadgeValueAfter;
 
+    @BeforeMethod
+    public void setUpInventoryPageTest(){
+        cartBadge = new CartBadge(driver);
+        inventoryPage = new InventoryPage(driver);
+        item1Page = new Item1Page(driver);
+    }
+
     @Test(dependsOnMethods = "testCases.LoginTest.verifyUserLoginTest",priority = 0)
     public void verifyUserAddOneProductToCart(){
-        //Validate that user can successfully add any item in index.html page into own cart.
-        //Pre-Requisites:
-            //1. User has been logging to application successfully.
-            //2. There are no previously added items in a user's cart.
         logger.info("*********** TC_2.1 Validate that user can successfully add any item in index.html page into own cart Started ************");
         try {
             // Initialize CartBadge object and check if the cart is empty initially
             cartBadge = new CartBadge(driver);
-                cartBadgeValueBefore = 0;
-                logger.debug("Shopping cart badge is not displayed initially.");
-                logger.info("Total items in cart before adding a product: " + cartBadgeValueBefore);
-                Assert.assertEquals(cartBadgeValueBefore, 0, "Cart should be empty initially.");
 
+            if(cartBadge.isShoppingCartBadgeDisplay() == true){
+                logger.warn("Shopping cart badge is displayed. Already added items available in cart");
+                Assert.assertEquals(true,false,"Expected false from isShoppingCartBadgeDisplay() method.Actual is true");
+            }if(cartBadge.isShoppingCartBadgeDisplay() == false){
+                cartBadgeValueBefore = 0;
+                logger.info("Shopping cart badge is not displayed initially");
+                logger.info("Assign default value (0) to cartBadge. Total items in cart before adding a product: " + cartBadgeValueBefore);
+            }
             // Add Product1 to the cart
-            Assert.assertTrue(inventoryPage.isProduct1AddToCartBtnDisplay(), "Product1 AddToCart button is not visible.");
+            Assert.assertTrue(inventoryPage.isProduct1AddToCartBtnDisplay(), "Product1 AddToCart button is not visible.Expected value is: true. Actual value is: " + inventoryPage.isProduct1AddToCartBtnDisplay());
             inventoryPage.clickOnProduct1AddToCartBtn();
             logger.debug("Clicked on AddToCart button for Product1.");
 
@@ -52,12 +63,7 @@ public class InventoryPageTest extends LoginTest{
 
     @Test(dependsOnMethods = "testCases.AddToCartTest.verifyUserAddOneProductToCart",priority = 1)
     public void verifyUserAddSecondProductToCart(){
-       // Validate that user can successfully add 2nd item into own cart after 1st item add.
-       //1. User has been logging to application successfully.
-        //2. There are  previously added items in a user's cart.
-        //3. There are more items in index.html page
         logger.info(" ********** TC_2.2 : Validate that user can successfully add 2nd item into own cart after 1st item add. ***********");
-
         try{
             cartBadgeValueBefore = cartBadge.getNoOfItemsDisplayedOnShoppingCartBadge();
             logger.info("Total Products available in cart before add 2nd item : " + cartBadgeValueBefore);
@@ -71,7 +77,7 @@ public class InventoryPageTest extends LoginTest{
                 cartBadgeValueAfter = cartBadge.getNoOfItemsDisplayedOnShoppingCartBadge();
                 Assert.assertEquals(cartBadgeValueAfter,cartBadgeValueBefore + 1, "Cart badge value did not increase after adding an item.");
             }
-            logger.info("Previously added products not available.");
+            logger.info("Previously added products not available");
         }
         catch (Exception e) {
             Assert.fail("Failed to add item to cart: " + e.getMessage());

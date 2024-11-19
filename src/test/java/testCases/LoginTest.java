@@ -1,16 +1,28 @@
 package testCases;
 
-import org.apache.logging.log4j.LogManager;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageObject.InventoryPage;
 import pageObject.LoginPage;
+import utilities.TestCaseMetadata;
 
 public class LoginTest extends BaseClass{
     protected InventoryPage inventoryPage;
-    @Test
+    @Test(testName = "TC_1.1",priority = 0)
     public void verifyUserLoginTest() {
-        logger.info("*********** Start login test ***********");
+        String testCaseID = "TC_1.1";
+        String module = "Login";
+        String scenario = TestCaseMetadata.getScenario(testCaseID,module);
+        String description = TestCaseMetadata.getDescription(testCaseID, module);
+        String priority = TestCaseMetadata.getPriority(testCaseID, module);
+        String severity = TestCaseMetadata.getSeverity(testCaseID,module);
+
+        // Log metadata
+        logger.info("************" + testCaseID + " Test Case Execution started ************");
+        logger.info("Scenario:" + scenario);
+        logger.info("Description: " + description);
+        logger.info("Priority: " + priority);
+        logger.info("Severity: " + severity);
         try {
             //Login Page Object
             LoginPage loginPage = new LoginPage(driver);
@@ -23,7 +35,7 @@ public class LoginTest extends BaseClass{
             boolean targetPage = inventoryPage.isDisplayPageTitle();
             Assert.assertTrue(targetPage);
 
-            String expectedInventoryPageUrl = "https://www.saucedemo.com/inventory.html";
+            String expectedInventoryPageUrl = inventoryPage.inventoryPageUrl;
             String actualPageUrl = inventoryPage.getCurrentPageUrl();
             Assert.assertEquals(actualPageUrl, expectedInventoryPageUrl);
         }

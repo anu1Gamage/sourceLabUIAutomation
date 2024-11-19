@@ -3,17 +3,16 @@
 
 <suite name="Master Suite">
 
-    <!--<listeners>
-        <listener class-name="utilities.ExtendReportMannager"></listener>
-    </listeners> -->
+    <listeners>
+        <listener class-name="utilities.CustomListener"></listener>
+    </listeners>
     <test thread-count="5" name="TestCases">
 
         <parameter name="os" value="windows" />
         <parameter name="browser" value="chrome" />
 
         <classes>
-            <!-- class name="testCases.TC_1_1_RegistrationTest"/ -->
-            <class name = "testCases.InventoryPageTest" />
+            <class name = "testCases.LoginTest" />
             <!-- You can add more test classes here -->
         </classes>
 

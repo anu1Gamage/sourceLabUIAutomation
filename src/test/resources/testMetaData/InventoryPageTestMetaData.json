@@ -1,0 +1,45 @@
+{
+  "TC_2.1": {
+    "description": "Validate that user can successfully add any item which is available in index.html page into own cart",
+    "priority": "High",
+    "Severity": "High",
+    "author": "Anoja"
+  },
+  "TC_2.2": {
+    "description": "Validate that user can successfully add 2nd item into own cart after 1st item add",
+    "priority": "High",
+    "Severity": "High",
+    "author": "Anoja"
+  },
+  "TC_2.3": {
+    "description": "Validate that user can successfully add all items available in Inventory Page into own cart",
+    "priority": "High",
+    "severity": "High",
+    "author": "Anoja"
+  },
+  "TC_2.4": {
+    "description": "Validate that user successfully remove added item from cart by clicking remove button of added product",
+    "priority": "High",
+    "severity": "High",
+    "author": "Anoja"
+  },
+  "TC_2.5": {
+    "description": "Validate that user successfully remove one item from added items in user's cart by clicking remove button displayed",
+    "priority": "High",
+    "severity": "High",
+    "author": "Anoja"
+  },
+  "TC_2.6": {
+    "description": "Validate that user successfully add item to cart by following below flow. Click on selected Item image >>  Click on Add to cart button >> Click on Back to Products Link.",
+    "priority": "High",
+    "severity": "High",
+    "author": "Anoja"
+  },
+  "TC_2.7": {
+    "description": "Validate that user successfully add item to cart by following below flow. Click on selected Item image >>  Click on Add to cart button >> Click on Back to Products Link ",
+    "priority": "High",
+    "severity": "High",
+    "author": "Anoja"
+  }
+
+}

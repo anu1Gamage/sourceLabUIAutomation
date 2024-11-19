@@ -4,14 +4,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 public class CartPage extends BasePage{
     public CartPage(WebDriver driver) {
         super(driver);
     }
 
-
-    final String pageUrl = "https://www.saucedemo.com/cart.html";
-    final String YourCartPageTitle = "Your Cart";
+    public final String cartPageUrl = "https://www.saucedemo.com/cart.html";
+    public final String YourCartPageTitle = "Your Cart";
     //Locators
     @FindBy(className = "title")
     WebElement cartPageTitle;
@@ -30,6 +31,9 @@ public class CartPage extends BasePage{
     @FindBy(id = "remove-sauce-labs-bike-light")
     WebElement SauceLabsBoltTShirtRemoveBtn;
 
+    @FindBy(xpath = "//button[text() = 'Remove']")
+    List<WebElement> removeBtns;
+
     //Actions
     public boolean isCartPageTitleDisplay(){
         return cartPageTitle.isDisplayed();
@@ -41,6 +45,10 @@ public class CartPage extends BasePage{
 
     public boolean isCheckoutBtnDisplay(){
         return checkOutBtn.isDisplayed();
+    }
+
+    public boolean isContinueShoppingBtnDisplay(){
+        return continueShopping.isDisplayed();
     }
 
     public void clickOnCheckOutBtn(){
@@ -67,22 +75,13 @@ public class CartPage extends BasePage{
         return driver.getCurrentUrl();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public int getTotalRemoveBtns(){
+        int sum = 0;
+        List<WebElement> removeButtons = removeBtns;
+        for(int i =0; i<removeButtons.size();i++){
+            sum += i;
+        }
+        return sum;
+    }
 
 }

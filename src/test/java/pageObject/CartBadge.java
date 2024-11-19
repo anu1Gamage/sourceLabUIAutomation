@@ -1,5 +1,6 @@
 package pageObject;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,21 +13,24 @@ public class CartBadge extends BasePage{
 
     //Locator
     @FindBy(xpath = "//button[text() = 'Add to cart']")
-    WebElement addToCartBtn;
+    WebElement cartBtn;
     @FindBy(xpath = "//span[@class= 'shopping_cart_badge']")
     WebElement shoppingCartBadge;
 
     //Actions
     public boolean isAddToCartBtnDisplay(){
-        return addToCartBtn.isDisplayed();
+        return cartBtn.isDisplayed();
     }
 
-    public void clickOnAddToCartBtn(){
-        addToCartBtn.click();
+    public void clickOnCartBtn(){
+        cartBtn.click();
     }
 
     public boolean isShoppingCartBadgeDisplay(){
-        return shoppingCartBadge.isDisplayed();
+        try{return shoppingCartBadge.isDisplayed();
+        }catch(NoSuchElementException e){
+            return false;
+        }
     }
 
     public int getNoOfItemsDisplayedOnShoppingCartBadge(){
