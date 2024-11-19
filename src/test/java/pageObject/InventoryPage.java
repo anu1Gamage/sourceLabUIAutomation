@@ -21,7 +21,7 @@ public class InventoryPage extends BasePage{
 
     //Locators
     public final String inventoryPageUrl = "https://www.saucedemo.com/inventory.html";
-    public final String inventoryPageTitle = "Projects";
+    public final String inventoryPageTitle = "Products";
 
     //InventoryPageTitle locator
     @FindBy(xpath = "//span[text() ='Products']")

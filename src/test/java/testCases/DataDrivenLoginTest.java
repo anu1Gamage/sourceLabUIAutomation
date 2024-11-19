@@ -3,20 +3,24 @@ package testCases;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pageObject.InventoryPage;
 import pageObject.LoginPage;
+import utilities.CustomListener;
 import utilities.DataProviders;
 
 public class DataDrivenLoginTest extends BaseClass{
-    String expectedUrl = "https://www.saucedemo.com/inventory.html";
-    String expectedTitle = "Products";
+    protected InventoryPage inventoryPage;
+    String expectedUrl = inventoryPage.inventoryPageUrl;
+    String expectedTitle = inventoryPage.inventoryPageTitle;
 
 @Test (dataProvider = "loginData",dataProviderClass = DataProviders.class)
     public void DataDrivenLoginTest(String testCaseId, String userName, String password, boolean successExpected, String ExpectedError){
-        logger.info("******** Login Scenario : "+ testCaseId +" Data driven test case execution started *********** ");
+
+    logger.info("******** Login Scenario : "+ testCaseId +" Data driven test case execution started *********** ");
         //Initialize LoginPage object
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(BaseClass.getDriver());
 
         // Set username only if it is not null
         if (userName != null) {
@@ -33,7 +37,6 @@ public class DataDrivenLoginTest extends BaseClass{
 
         if(successExpected){
             //verify user directs to Inventory Page
-            InventoryPage inventoryPage = new InventoryPage(driver);
             Assert.assertEquals(inventoryPage.getCurrentPageUrl(),expectedUrl,"User is not in the inventory page");
             Assert.assertEquals(inventoryPage.getInventoryPageTitle(),expectedTitle,"Inventory Page Title not match to expected page title");
         }else{
@@ -47,7 +50,7 @@ public class DataDrivenLoginTest extends BaseClass{
     public void verifyUserLoginUsingKeyBoardActions(String testCaseId, String userName, String password, boolean successExpected, String ExpectedError){
         logger.info("******** Login Scenario : " + testCaseId + " User Login with keyboard actions verification test case Execution started *********** ");
         //Initialize LoginPage object
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(BaseClass.getDriver());
 
         // Set username only if it is not null
         if (userName != null) {
@@ -64,7 +67,7 @@ public class DataDrivenLoginTest extends BaseClass{
 
         if(successExpected){
             //verify user directs to Inventory Page
-            InventoryPage inventoryPage = new InventoryPage(driver);
+            InventoryPage inventoryPage = new InventoryPage(BaseClass.getDriver());
             Assert.assertEquals(inventoryPage.getCurrentPageUrl(),expectedUrl,"User is not in the inventory page");
             Assert.assertEquals(inventoryPage.getInventoryPageTitle(),expectedTitle,"Inventory Page Title not match to expected page title");
         }else{

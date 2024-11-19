@@ -8,12 +8,15 @@ import org.openqa.selenium.Keys;
 
 public class LoginPage extends BasePage {
 
+
     //constructor
     public LoginPage(WebDriver driver) {
         super(driver);
     }
 
-    //Locators
+    //constants
+    public final String inventoryPageUrl = "https://www.saucedemo.com/inventory.html";
+    public final String inventoryPageTitle = "Projects";
     //userName
     @FindBy(id = "user-name")
     private WebElement userNameIn;

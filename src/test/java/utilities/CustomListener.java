@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import testCases.BaseClass;
 
 public class CustomListener implements ITestListener {
 
@@ -29,7 +30,11 @@ public class CustomListener implements ITestListener {
 
     @Override
     public void onTestFailure(ITestResult result) {
-        ExtendReportManager.getTest().fail("Test Failed: " + result.getThrowable());
+        WebDriver driver = BaseClass.getDriver();
+        String screenshotPath = ScreenshotUtility.captureScreenshot(driver, result.getMethod().getMethodName());
+        ExtendReportManager.getTest()
+                .fail("Test Failed: " + result.getThrowable())
+                .addScreenCaptureFromPath(screenshotPath);
     }
 
     @Override

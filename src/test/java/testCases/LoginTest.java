@@ -1,11 +1,15 @@
 package testCases;
 
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pageObject.InventoryPage;
 import pageObject.LoginPage;
+import utilities.CustomListener;
 import utilities.TestCaseMetadata;
 
+
+@Listeners(CustomListener.class)
 public class LoginTest extends BaseClass{
     protected InventoryPage inventoryPage;
     @Test(testName = "TC_1.1",priority = 0)
@@ -25,13 +29,13 @@ public class LoginTest extends BaseClass{
         logger.info("Severity: " + severity);
         try {
             //Login Page Object
-            LoginPage loginPage = new LoginPage(driver);
+            LoginPage loginPage = new LoginPage(BaseClass.getDriver());
             loginPage.setUserName(properties.getProperty("userName"));
             loginPage.setPassword(properties.getProperty("password"));
             loginPage.clickLoginBtn();
 
             //InventoryProduct page object
-            inventoryPage = new InventoryPage(driver);
+            inventoryPage = new InventoryPage(BaseClass.getDriver());
             boolean targetPage = inventoryPage.isDisplayPageTitle();
             Assert.assertTrue(targetPage);
 

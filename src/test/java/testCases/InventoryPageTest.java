@@ -19,9 +19,9 @@ public class InventoryPageTest extends LoginTest{
 
     @BeforeMethod
     public void setUpInventoryPageTest(){
-        cartBadge = new CartBadge(driver);
-        inventoryPage = new InventoryPage(driver);
-        item1Page = new Item1Page(driver);
+        cartBadge = new CartBadge(BaseClass.getDriver());
+        inventoryPage = new InventoryPage(BaseClass.getDriver());
+        item1Page = new Item1Page(BaseClass.getDriver());
     }
 
     @Test(dependsOnMethods = "testCases.LoginTest.verifyUserLoginTest",priority = 0)
@@ -29,7 +29,7 @@ public class InventoryPageTest extends LoginTest{
         logger.info("*********** TC_2.1 Validate that user can successfully add any item in index.html page into own cart Started ************");
         try {
             // Initialize CartBadge object and check if the cart is empty initially
-            cartBadge = new CartBadge(driver);
+            cartBadge = new CartBadge(BaseClass.getDriver());
 
             if(cartBadge.isShoppingCartBadgeDisplay() == true){
                 logger.warn("Shopping cart badge is displayed. Already added items available in cart");

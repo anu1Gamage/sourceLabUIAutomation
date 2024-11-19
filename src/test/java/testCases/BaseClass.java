@@ -16,7 +16,7 @@ import java.util.Properties;
 
 public class BaseClass {
 
-   public static WebDriver driver;
+   private static WebDriver driver;
    public Properties properties;
    public Logger logger;
 
@@ -52,10 +52,24 @@ public class BaseClass {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get(properties.getProperty("appURL"));
         driver.manage().window().maximize();
+
+        logger.info("Browser initialized: " + br + " on OS: " + os);
+        logger.info("Navigated to: " + properties.getProperty("appURL"));
     }
 
     @AfterSuite
     public void tearDown() {
-        driver.quit();
+        if (driver != null) {
+            driver.quit();
+            logger.info("Browser closed successfully.");
+        }
+    }
+
+    // Provide access to WebDriver instance
+    public static WebDriver getDriver() {
+        if (driver == null) {
+            throw new IllegalStateException("WebDriver is not initialized. Please call setUp() first.");
+        }
+        return driver;
     }
 }
