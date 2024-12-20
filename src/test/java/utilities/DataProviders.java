@@ -107,6 +107,14 @@ public class DataProviders{
         };
     }
 
+    //method 5
+    @DataProvider(name = "productIndexes")
+    public static Object[][] productIndexes() {
+        return new Object[][]{
+                {0}, {1}, {2}, {3}, {4}, {5}
+        };
+    }
+
 
 
     }

@@ -1,13 +1,19 @@
 {
   "TC_1.1": {
-    "description": "Validate user successfully login to Inventory page using correct user name and password",
+    "scenario": "DataDrivenLoginTest",
+    "description": "Validate user successfully login to Inventory page using Valid username and password",
     "priority": "High",
-    "author": "Anoja"
+    "severity": "High",
+    "author": "Anoja",
+    "tags": ["Smoke"]
   },
 
-  "TC_1.1": {
-    "description": "Validate user ",
+  "TC_1.2": {
+    "scenario": "DataDrivenLoginTest",
+    "description": "Validate user successfully login to Inventory page using correct user name and password",
     "priority": "High",
-    "author": "Anoja"
+    "severity": "High",
+    "author": "Anoja",
+    "tags": ["Smoke"]
   }
 }

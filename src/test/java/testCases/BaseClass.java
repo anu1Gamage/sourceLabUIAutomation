@@ -8,7 +8,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.*;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.Duration;
@@ -17,8 +16,8 @@ import java.util.Properties;
 public class BaseClass {
 
    private static WebDriver driver;
-   public Properties properties;
-   public Logger logger;
+   public static Properties properties;
+   public static Logger logger;
 
 
     @BeforeSuite

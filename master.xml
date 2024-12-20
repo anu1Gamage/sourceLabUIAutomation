@@ -10,9 +10,10 @@
 
         <parameter name="os" value="windows" />
         <parameter name="browser" value="chrome" />
-
         <classes>
-            <class name = "testCases.LoginTest" />
+            <!-- class name = "testCases.LoginTest" / -->
+            <!--class name = "testCases.DataDrivenLoginTest" /-->
+            <class name = "testCases.InventoryPageTest" />
             <!-- You can add more test classes here -->
         </classes>
 

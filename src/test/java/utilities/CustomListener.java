@@ -1,15 +1,13 @@
 package utilities;
 
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.Status;
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.annotations.Test;
 import testCases.BaseClass;
+import java.lang.reflect.Method;
 
 public class CustomListener implements ITestListener {
 
@@ -20,7 +18,28 @@ public class CustomListener implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult result) {
-        ExtendReportManager.createTest(result.getMethod().getMethodName(), result.getMethod().getDescription());
+       //org.apache.logging.log4j.Logger logger = BaseClass.logger;
+
+        Method method = result.getMethod().getConstructorOrMethod().getMethod();
+        Test testAnnotation = method.getAnnotation(Test.class);
+        String testCaseID = testAnnotation.testName();
+
+        String testMethodName = result.getMethod().getMethodName();
+        String moduleName = result.getTestContext().getAttribute("module") != null
+                ? result.getTestContext().getAttribute("module").toString()
+                : "default";
+        String description = testAnnotation.description();
+        String Scenario = moduleName;
+        //logger.info("Starting test: " + testCaseID);
+        //logger.info("TestMethod :" + testMethodName);
+        //logger.info("Module name: " + moduleName);
+
+        try {
+            ExtendReportManager.createTest(testCaseID, moduleName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to initialize test for ID: " + testCaseID + " and Module: " + moduleName);
+        }
     }
 
     @Override

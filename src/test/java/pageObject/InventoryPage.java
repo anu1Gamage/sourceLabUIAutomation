@@ -1,6 +1,7 @@
 package pageObject;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,6 +13,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static testCases.BaseClass.logger;
+
 public class InventoryPage extends BasePage{
 
     //Constructor
@@ -21,72 +24,45 @@ public class InventoryPage extends BasePage{
 
     //Locators
     public final String inventoryPageUrl = "https://www.saucedemo.com/inventory.html";
-    public final String inventoryPageTitle = "Products";
 
-    //InventoryPageTitle locator
+    public final String inventoryPageTitle = "Products";
+    public final int maxProductsInInventoryPage = 6;
     @FindBy(xpath = "//span[text() ='Products']")
     WebElement InventoryPageTitle;
-    //Product 1
-    @FindBy(xpath = "(//button[text() = 'Add to cart'])[1]")
-    WebElement Product1;
-    //product 2
-    @FindBy(xpath = "(//button[text() = 'Add to cart'])[2]")
-    WebElement product2;
-    //product 3
-    @FindBy(xpath = "(//button[text() = 'Add to cart'])[3]")
-    WebElement product3;
-    //Product 4
-    @FindBy(xpath = "(//button[text() = 'Add to cart'])[4]")
-    WebElement product4;
-    //product 5
-    @FindBy(xpath = "(//button[text() = 'Add to cart'])[5]")
-    WebElement product5;
-    //product 6
-    @FindBy(xpath = "(//button[text() = 'Add to cart'])[6]")
-    WebElement product6;
-    //product1Title
+
     @FindBy(xpath = "//div[@data-test = 'inventory-item-name' and text() = 'Sauce Labs Backpack']")
     WebElement product1Title;
-    //product2Title
+
     @FindBy(xpath = "//div[@data-test = 'inventory-item-name' and text() = 'Sauce Labs Bike Light']")
     WebElement product2Title;
-    //product3Title
+
     @FindBy(xpath = "//div[@data-test = 'inventory-item-name' and text() = 'Sauce Labs Bolt T-Shirt']")
     WebElement product3Title;
-    //product4Title
+
     @FindBy(xpath = "//div[@data-test = 'inventory-item-name' and text() = 'Sauce Labs Fleece Jacket']")
     WebElement product4Title;
-    //product1Price
+
     @FindBy(xpath = "(//div[@class = 'inventory_item_price'])[1]")
     WebElement product1Price;
-    //product2price
+
     @FindBy(xpath = "(//div[@class = 'inventory_item_price'])[2]")
     WebElement product2Price;
-    //product3Price
+
     @FindBy(xpath = "(//div[@class = 'inventory_item_price'])[3]")
     WebElement product3Price;
-    //product4Price
+
     @FindBy(xpath = "(//div[@class = 'inventory_item_price'])[4]")
     WebElement product4Price;
-    //product1Image
+
     @FindBy(xpath = "(//img[@class = 'inventory_item_img'])[1]")
     WebElement product1Image;
-    //productSortDDB
-    @FindBy(xpath = "//select[@class = 'product_sort_container']")
-    WebElement productSortDropDownBtn;
-    //ShoppingCartIcon
+
+    @FindBy(xpath = "(//img[@class = 'inventory_item_img'])")
+    List<WebElement> productsImages;
+
     @FindBy(xpath = "//a[@class = 'shopping_cart_link']")
     WebElement ShoppingCartIcon;
-    //SauceLabsBackPackRemoveBtn
-    @FindBy(id = "remove-sauce-labs-backpack")
-    WebElement SauceLabsBackPackRemoveBtn;
-    //remove-sauce-labs-bike-light
-    @FindBy(id = "remove-sauce-labs-bike-light")
-    WebElement SauceLabsBikeLightRemoveBtn;
-    //remove-sauce-labs-bolt-t-shirt
-    @FindBy(id = "remove-sauce-labs-bolt-t-shirt")
-    WebElement SauceLabsBoltTShirtRemoveBtn;
-    //inventoryItemsNames
+
     @FindBy(className = "inventory_item_name")
     List<WebElement> inventoryItemNames;
 
@@ -97,7 +73,7 @@ public class InventoryPage extends BasePage{
     List<WebElement> addToCartButtons;
 
     @FindBy(xpath = "//button[text() = 'Remove']")
-    List<WebElement> RemoveButtonsList;
+    List<WebElement> removeButtons;
 
 
     //Action methods
@@ -116,48 +92,11 @@ public class InventoryPage extends BasePage{
     }
 
     public String getInventoryPageTitle(){
-
         return InventoryPageTitle.getText();
-    }
-
-    public void clickOnProduct1AddToCartBtn(){
-        Product1.click();
-    }
-
-    public void clickOnProduct2AddToCartBtn(){
-        product2.click();
-    }
-
-    public void clickOnProduct3AddToCartBtn(){
-        product3.click();
-    }
-
-    public void clickOnProduct4AddToCartBtn(){
-        product4.click();
-    }
-
-    public void clickOnProduct5AddToCartBtn(){
-        product5.click();
-    }
-
-    public void clickOnProduct6AddToCartBtn(){
-        product6.click();
     }
 
     public void clickOnProduct1TitleLink(){
         product1Title.click();
-    }
-
-    public void clickOnProduct2TitleLink(){
-        product2Title.click();
-    }
-
-    public void clickOnProduct3TitleLink(){
-        product3Title.click();
-    }
-
-    public void clickOnProduct4TitleLink(){
-        product4Title.click();
     }
 
     public double getProduct1ItemPrice(){
@@ -176,57 +115,8 @@ public class InventoryPage extends BasePage{
         return Double.parseDouble(product4Price.getText().replace("Total: $",""));
     }
 
-    public void clickOnSauceLabsBackPackRemoveBtn(){
-        SauceLabsBackPackRemoveBtn.click();
-    }
-
-    public void clickOnSauceLabsBikeLightRemoveBtn(){
-        SauceLabsBikeLightRemoveBtn.click();
-    }
-
-    public void clickOnSauceLabsBoltTShirtRemoveBtn(){
-        SauceLabsBoltTShirtRemoveBtn.click();
-    }
-
     public void clickOnProduct1Image(){
         product1Image.click();
-    }
-
-    public boolean isProduct1AddToCartBtnDisplay(){
-       return Product1.isDisplayed();
-    }
-
-    public boolean isProduct2AddToCartBtnDisplay(){
-        return product2.isDisplayed();
-    }
-
-    public boolean isProduct3AddToCartBtnDisplay(){
-        return product3.isDisplayed();
-    }
-
-    public boolean isProduct4AddToCartBtnDisplay(){
-        return product4.isDisplayed();
-    }
-
-    public boolean isProduct5AddToCartBtnDisplay(){
-        return product5.isDisplayed();
-    }
-
-    public boolean isProduct6AddToCartBtnDisplay(){
-        return product6.isDisplayed();
-    }
-
-
-    public boolean isSauceLabsBackPackRemoveBtnDisplay(){
-        return SauceLabsBackPackRemoveBtn.isDisplayed();
-    }
-
-    public boolean isSauceLabsBikeLightRemoveBtnDisplay(){
-        return SauceLabsBikeLightRemoveBtn.isDisplayed();
-    }
-
-    public boolean isSauceLabsBoltTShirtRemoveBtnDisplay(){
-        return SauceLabsBoltTShirtRemoveBtn.isDisplayed();
     }
 
     public boolean isDropDownBtnDisplay(){
@@ -269,28 +159,112 @@ public class InventoryPage extends BasePage{
       return getTotalAvailableItemListByItemName().isEmpty();
     }
 
-    public void clickOnAvailableAllAddToCartButtonElementsInInventoryPage() {
+    public boolean isAddToCartBtnDisplay(){
+        for (WebElement button : addToCartButtons) {
+            if (button.isDisplayed()) {
+                return true;
+            }
+        }
+            return false;
+    }
 
+    public int countDisplayedAddToCartButtons() {
+        int count = 0;
+        for (WebElement button : addToCartButtons) {
+            if (button.isDisplayed()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public void clickOnAvailableAllAddToCartButtonElementsInInventoryPage() {
         // Loop through each button and click it
         for (WebElement button : addToCartButtons) {
             button.click();
         }
     }
 
+    public void clickOnFirstProductAddToCartBtn(){
+        addToCartButtons.get(0).click();
+    }
+
+    public void clickOnSecondProductAddToCartBtn(){
+        addToCartButtons.get(1).click();
+    }
+
+    public void clickAddToCartButtonByIndex(int index) {
+        try {
+            addToCartButtons.get(index).click();
+            logger.info("Clicked 'Add to Cart' button for product at index: " + index);
+        } catch (IndexOutOfBoundsException e) {
+            logger.error("No product found at index: " + index);
+            throw new NoSuchElementException("Add to Cart button not found for product at index: " + index, e);
+        }
+    }
+
+    public void clickOnProductImageByIndex(int index){
+        try{
+           productsImages.get(index).click();
+            logger.info("Clicked product's image of product at index: " + index);
+        }catch(IndexOutOfBoundsException e){
+            logger.error("No product found at index: " + index);
+            throw new NoSuchElementException("Add to Cart button not found for product at index: " + index, e);
+        }
+    }
+
+
+    public void clickOnProductNameByIndex(int index){
+       try{
+           inventoryItemNames.get(index).click();
+           logger.info("Clicked on Product Name");
+       }catch(IndexOutOfBoundsException e){
+        logger.error("No product found at index : " +index);
+        throw new NoSuchElementException("Product Name not found for product at given index: \" + index, e");
+       }
+    }
+
+
     public boolean isAlreadyAddedItemsAvailable(){
-        if(RemoveButtonsList.isEmpty()){
+        if(removeButtons.isEmpty()){
             return false;
         }
         return true;
     }
 
     public int getAvailableRemoveBtnCount(){
-       return RemoveButtonsList.size();
+       return removeButtons.size();
+    }
+
+    public boolean isRemoveBtnDisplay(){
+        for (WebElement button : removeButtons) {
+            if (button.isDisplayed()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void clickOnFirstProductRemoveBtn(){
+        addToCartButtons.get(0).click();
+    }
+
+    public void clickOnSecondProductRemoveBtn(){
+        addToCartButtons.get(1).click();
     }
 
     public void clickOnAvailableAllRemoveButtons(){
-        for(WebElement button : RemoveButtonsList){
+        for(WebElement button : removeButtons){
             button.click();
+        }
+    }
+    public void clickOnProductRemoveButton(int index){
+        try {
+            removeButtons.get(index).click();
+            logger.info("Clicked on 'Remove' button for product at index: " + index);
+        } catch (IndexOutOfBoundsException e) {
+            logger.error("No product found at index: " + index);
+            throw new NoSuchElementException("Remove button not found for product at index: " + index, e);
         }
     }
 
@@ -317,15 +291,9 @@ public class InventoryPage extends BasePage{
         return displayedItemPrices;
     }
 
-//    public List<Double> getTotalAvailableItemPriceListByItemPrice() {
-//        List<WebElement> availableItems = inventoryItemNames;
-//        List<Double> displayedItemPrices = new ArrayList<>();
-//        for (WebElement price : availableItems) {
-//            String priceText = price.getText().replace("$", "");
-//            displayedItemPrices.add(Double.parseDouble(priceText));
-//        }
-//        return displayedItemPrices;
-//    }
+    public boolean isDropDownBtnAvailable(){
+      return dropDownBtn.isDisplayed();
+    }
 
     public void sortOrFilterProductsFromAtoZByName(){
         Select select = new Select(dropDownBtn);

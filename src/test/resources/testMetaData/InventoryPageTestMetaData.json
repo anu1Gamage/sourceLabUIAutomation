@@ -3,13 +3,15 @@
     "description": "Validate that user can successfully add any item which is available in index.html page into own cart",
     "priority": "High",
     "Severity": "High",
-    "author": "Anoja"
+    "author": "Anoja",
+    "tags": ["Smoke","Functional","E2E"]
   },
   "TC_2.2": {
     "description": "Validate that user can successfully add 2nd item into own cart after 1st item add",
     "priority": "High",
     "Severity": "High",
-    "author": "Anoja"
+    "author": "Anoja",
+    "tags": ["Functional"]
   },
   "TC_2.3": {
     "description": "Validate that user can successfully add all items available in Inventory Page into own cart",
@@ -30,13 +32,55 @@
     "author": "Anoja"
   },
   "TC_2.6": {
-    "description": "Validate that user successfully add item to cart by following below flow. Click on selected Item image >>  Click on Add to cart button >> Click on Back to Products Link.",
+    "description": "Validate that user successfully remove all item from added items in user's cart by clicking remove button displayed",
     "priority": "High",
     "severity": "High",
     "author": "Anoja"
   },
   "TC_2.7": {
-    "description": "Validate that user successfully add item to cart by following below flow. Click on selected Item image >>  Click on Add to cart button >> Click on Back to Products Link ",
+    "description": "Validate that user successfully add item to cart by following below flow. Click on selected Item image >>  Click on Add to cart button >> Click on Back to Products Link.",
+    "priority": "High",
+    "severity": "High",
+    "author": "Anoja"
+  },
+  "TC_2.8": {
+    "description": " Validate that user successfully add item  and remove same item from cart by following below flow. \n\nClick on selected Item image >>  Click on Add to cart button >>Click on Remove button >> Click on Back to Products Link",
+    "priority": "High",
+    "severity": "High",
+    "author": "Anoja"
+  },
+  "TC_2.9": {
+    "description": "Validate that user successfully add item to cart by following below flow. Click on selected Item name >>  Click on Add to cart button >> Click on Back to Products Link",
+    "priority": "High",
+    "severity": "High",
+    "author": "Anoja"
+  },
+  "TC_2.10": {
+    "description": "Validate that application products displaying  default method is Name(A to Z)",
+    "priority": "High",
+    "severity": "High",
+    "author": "Anoja"
+  },
+  "TC_2.11": {
+    "description": "Validate that user sort/filter products From Z to A by Name",
+    "priority": "High",
+    "severity": "High",
+    "author": "Anoja"
+  },
+  "TC_2.12": {
+    "description": "Validate that user sort/filter products From A to Z by Name",
+    "priority": "High",
+    "severity": "High",
+    "author": "Anoja"
+  },
+  "TC_2.13": {
+    "description": "Validate that user sort/filter products From Low to High price",
+    "priority": "High",
+    "severity": "High",
+    "author": "Anoja"
+  },
+  "TC_2.14": {
+    "description": "Validate that user sort/filter products From High to Low price",
     "priority": "High",
     "severity": "High",
     "author": "Anoja"

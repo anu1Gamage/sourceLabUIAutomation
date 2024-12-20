@@ -4,6 +4,7 @@
     "description": "Validate user successfully login to Inventory page using correct user name and password",
     "priority": "High",
     "severity": "High",
-    "author": "Anoja"
+    "author": "Anoja",
+    "tags": ["Smoke"]
   }
 }

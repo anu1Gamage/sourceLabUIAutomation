@@ -1,0 +1,24 @@
+{
+  "TC_1.1": {
+    "description": "E2E Test : Validate that user can successfully order one product",
+    "priority": "High",
+    "Severity": "High",
+    "author": "Anoja",
+    "tags": [
+      "Smoke",
+      "Functional",
+      "E2E"
+    ]
+  },
+  "TC_1.2": {
+    "description": "E2E Test : Validate that user can successfully order Multiple products",
+    "priority": "High",
+    "Severity": "High",
+    "author": "Anoja",
+    "tags": [
+      "Smoke",
+      "Functional",
+      "E2E"
+    ]
+  }
+}

@@ -9,12 +9,17 @@ public class Item1Page extends BasePage {
         super(driver);
     }
 
+    public final String productIndex1ItemPage = "https://www.saucedemo.com/inventory-item.html?id=4";
     //locators
     @FindBy(id = "back-to-products")
     WebElement backToProductsLinkBtn;
 
     public void clickOnBackToProductsBtn(){
         backToProductsLinkBtn.click();
+    }
+
+    public String getCurrentPageUrl(){
+        return driver.getCurrentUrl();
     }
 
 }

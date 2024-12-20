@@ -33,8 +33,26 @@ public class ExtendReportManager {
     }
 
     // Create a test node
-    public static void createTest(String testName, String description) {
+    /*public static void createTest(String testName, String description) {
         ExtentTest extentTest = extent.createTest(testName, description);
+        test.set(extentTest);
+    }*/
+    public static void createTest(String testCaseID, String moduleName) {
+        // Fetch metadata
+        String description = TestCaseMetadata.getDescription(testCaseID, moduleName);
+        String scenario = TestCaseMetadata.getScenario(testCaseID, moduleName);
+        String priority = TestCaseMetadata.getPriority(testCaseID, moduleName);
+        String severity = TestCaseMetadata.getSeverity(testCaseID, moduleName);
+        String author = TestCaseMetadata.getAuthor(testCaseID, moduleName);
+
+        // Create test node with metadata
+        //ExtentTest extentTest = extent.createTest(testCaseID + " - " + moduleName);
+        ExtentTest extentTest = extent.createTest(testCaseID + " - " + scenario, description);
+        extentTest.assignCategory(moduleName);
+        extentTest.assignAuthor(author);
+        extentTest.info("Priority: " + priority);
+        extentTest.info("Severity: " + severity);
+
         test.set(extentTest);
     }
 

@@ -1,0 +1,74 @@
+{
+  "TC_3.1": {
+    "description": "Validate that user successfully view own cart when there is no any item in cart",
+    "priority": "High",
+    "Severity": "High",
+    "author": "Anoja",
+    "tags": [
+      "Smoke",
+      "Functional",
+      "E2E"
+    ]
+  },
+  "TC_3.2": {
+    "description": "Validate that user successfully views their cart when there are items in the cart",
+    "priority": "High",
+    "Severity": "High",
+    "author": "Anoja",
+    "tags": [
+      "Smoke",
+      "Functional",
+      "E2E"
+    ]
+  },
+  "TC_3.5": {
+    "description": "Validate that user can continue shopping by click on Continue Shopping button on cart page",
+    "priority": "High",
+    "Severity": "High",
+    "author": "Anoja",
+    "tags": [
+      "Smoke",
+      "Functional",
+      "E2E"
+    ]
+  },
+  "TC_3.3": {
+    "description": "Validate that user added all products are displayed in cart page",
+    "priority": "High",
+    "Severity": "High",
+    "author": "Anoja",
+    "tags": [
+      "Smoke",
+      "Functional",
+      "E2E"
+    ]
+  },
+  "TC_3.4": {
+    "description": "Validate that Checkout button is available and user directs to checkout step one page after clicked on checkout button",
+    "priority": "High",
+    "Severity": "High",
+    "author": "Anoja",
+    "tags": [
+      "Smoke",
+      "Functional",
+      "E2E"
+    ]
+  },
+  "TC_3.6": {
+    "description": "Validate that Checkout button is available and user not directs to checkout step one page after clicked on checkout button without cart items",
+    "priority": "High",
+    "Severity": "High",
+    "author": "Anoja",
+    "tags": [
+      "Smoke",
+      "Functional",
+      "E2E"
+    ]
+  }
+
+
+
+
+
+
+}
