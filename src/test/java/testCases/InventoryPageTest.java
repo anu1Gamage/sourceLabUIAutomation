@@ -268,7 +268,10 @@ public class InventoryPageTest extends BaseClass{
         Assert.assertEquals(actualPageUrl,expectedPageUrl,"Actual page url is mismatched with expected page url");
     }
 
-    @Test(testName = "TC_2.1", dependsOnMethods = "testCases.LoginTest.verifyUserLoginTest", priority = 1, groups = {"Functional", "E2E"})
+    @Test(testName = "TC_2.1",
+          dependsOnMethods = "testCases.LoginTest.verifyUserLoginTest",
+          priority = 1,
+          groups = {"Functional", "E2E"})
     public void verifyUserAddOneProductToCart(ITestContext context) {
         String testCaseID = getTestCaseId();
         String module = context.getAttribute("module").toString();

@@ -21,17 +21,6 @@
       "E2E"
     ]
   },
-  "TC_3.5": {
-    "description": "Validate that user can continue shopping by click on Continue Shopping button on cart page",
-    "priority": "High",
-    "Severity": "High",
-    "author": "Anoja",
-    "tags": [
-      "Smoke",
-      "Functional",
-      "E2E"
-    ]
-  },
   "TC_3.3": {
     "description": "Validate that user added all products are displayed in cart page",
     "priority": "High",
@@ -54,8 +43,19 @@
       "E2E"
     ]
   },
+  "TC_3.5": {
+    "description": "Validate that user can continue shopping by click on Continue Shopping button on cart page",
+    "priority": "High",
+    "Severity": "High",
+    "author": "Anoja",
+    "tags": [
+      "Smoke",
+      "Functional",
+      "E2E"
+    ]
+  },
   "TC_3.6": {
-    "description": "Validate that Checkout button is available and user not directs to checkout step one page after clicked on checkout button without cart items",
+    "description": "Validate that Checkout button is available and user directs to checkout step one page after clicked on checkout button without cart items",
     "priority": "High",
     "Severity": "High",
     "author": "Anoja",

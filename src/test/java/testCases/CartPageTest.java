@@ -45,14 +45,15 @@ public class CartPageTest extends LoginTest{
             clickOnCartButton();
             cartPageAssertion(expectedCartPageUrl,expectedCartPageTitle);
         }catch(Exception e){
-            logger.info("Failed to view User's cart when Cart is empty");
-            logger.error("Exception encountered: ", e);
+            logger.error("Exception encountered, Failed to view User's cart when Cart is empty ", e);
+            throw e;
         }
         logger.info("*********** " + testCaseID + " test execution finished ************");
     }
 
     @Test(testName = "TC_3.2",
-          priority = 17
+          priority = 17,
+          dependsOnMethods = "testCases.inventoryPageTest.verifyUserAddOneProductToCart"
     )
     public void verifyUserViewCartWithItems(ITestContext context) {
         String testCaseID = getTestCaseId();
@@ -65,10 +66,11 @@ public class CartPageTest extends LoginTest{
         logger.info("*********** " + testCaseID + " " + description + " started ************");
         try {
             verifyItemsAvailableInCart();
+            assertItemsAvailableInCart();
             clickOnCartButton();
             cartPageAssertion(expectedCartPageUrl,expectedCartPageTitle);
         } catch (Exception e) {
-            logger.error("An unexpected error occurred during TC_2.15:", e);
+            logger.error("An unexpected error occurred during test execution:", e);
             throw e;
         }finally {
             logger.info("*********** " + testCaseID + " test execution finished ************");
@@ -77,7 +79,7 @@ public class CartPageTest extends LoginTest{
 
     @Test(testName ="TC_3.3",
           dependsOnMethods = "testCases.InventoryPageTest.verifyUserAddAllProductsInInventoryPageToCart",
-          priority = 17
+          priority = 18
     )
     public void verifyAllAddedItemsDisplayInCartPage(ITestContext context){
         String testCaseID = getTestCaseId();
@@ -90,6 +92,7 @@ public class CartPageTest extends LoginTest{
         logger.info("*********** " + testCaseID + " " + description + " started ************");
         try{
             verifyItemsAvailableInCart();
+            assertItemsAvailableInCart();
             clickOnCartButton();
             cartPageAssertion(expectedCartPageUrl,expectedCartPageTitle);
         }catch(Exception e){
@@ -101,7 +104,7 @@ public class CartPageTest extends LoginTest{
 
 @Test(testName = "TC_3.4",
       dependsOnMethods = "testCases.CartPageTest.verifyAllAddedItemsDisplayInCartPage",
-      priority = 18
+      priority = 19
     )
     public void verifyCheckoutButtonInCartPageWithCartItems(ITestContext context){
     String testCaseID = getTestCaseId();
@@ -114,7 +117,8 @@ public class CartPageTest extends LoginTest{
     logger.info("*********** " + testCaseID + " " + description + " started ************");
        try{
             verifyCheckoutBtnIsDisplay();
-            clickOnCheckoutBtnFunctionalityAssertion();
+            clickOnCheckoutButton();
+            assertClickOnCheckoutBtn();
        }catch(Exception e){
             logger.error("Exception encountered" ,e);
             throw e;
@@ -122,31 +126,8 @@ public class CartPageTest extends LoginTest{
         logger.info("*********** " + testCaseID + " test execution finished ************");
     }
 
-
-    @Test(testName = "TC_3.6",
-         dependsOnMethods = "testCases.CartPageTest.verifyUserViewEmptyCart",
-         priority = 16)
-    public void verifyCheckoutButtonInCartPageWithoutCartItems(ITestContext context){
-        String testCaseID = getTestCaseId();
-        String module = context.getAttribute("module").toString();
-        String scenario = TestCaseMetadata.getScenario(testCaseID, module);
-        String description = TestCaseMetadata.getDescription(testCaseID, module);
-        String priority = TestCaseMetadata.getPriority(testCaseID, module);
-        String severity = TestCaseMetadata.getSeverity(testCaseID, module);
-        logger.info("Test scenario: " + scenario + ", Priority: " + priority + ", Severity: " + severity);
-        logger.info("*********** " + testCaseID + " " + description + " started ************");
-        try{
-            verifyCheckoutBtnIsDisplay();
-            clickOnCheckoutBtnFunctionalityAssertion();
-        }catch(Exception e){
-            logger.error("Exception encountered" ,e);
-            throw e;
-        }
-        logger.info("*********** " + testCaseID + " test execution finished ************");
-    }
-
     @Test(testName = "TC_3.5",
-          priority = 16
+            priority = 20
     )
     public void verifyContinueShoppingButtonFunctionInCartPage(ITestContext context){
         String testCaseID = getTestCaseId();
@@ -169,6 +150,31 @@ public class CartPageTest extends LoginTest{
         logger.info("*********** " + testCaseID + " test execution finished ************");
     }
 
+
+    @Test(testName = "TC_3.6",
+         dependsOnMethods = "testCases.CartPageTest.verifyUserViewEmptyCart",
+         priority = 16)
+    public void verifyCheckoutButtonInCartPageWithoutCartItems(ITestContext context){
+        String testCaseID = getTestCaseId();
+        String module = context.getAttribute("module").toString();
+        String scenario = TestCaseMetadata.getScenario(testCaseID, module);
+        String description = TestCaseMetadata.getDescription(testCaseID, module);
+        String priority = TestCaseMetadata.getPriority(testCaseID, module);
+        String severity = TestCaseMetadata.getSeverity(testCaseID, module);
+        logger.info("Test scenario: " + scenario + ", Priority: " + priority + ", Severity: " + severity);
+        logger.info("*********** " + testCaseID + " " + description + " started ************");
+        try{
+            verifyCheckoutBtnIsDisplay();
+            clickOnCheckoutButton();
+            assertClickOnCheckoutBtn();
+        }catch(Exception e){
+            logger.error("Exception encountered" ,e);
+            throw e;
+        }
+        logger.info("*********** " + testCaseID + " test execution finished ************");
+    }
+
+
     private String getTestCaseId() {
         try {
             String methodName = new Throwable().getStackTrace()[1].getMethodName();
@@ -190,6 +196,11 @@ public class CartPageTest extends LoginTest{
             logger.info("There is no elements available in Cart" , e);
         }
     }
+
+    private void assertItemsAvailableInCart(){
+        Assert.assertEquals(cartBadge.isShoppingCartBadgeDisplay(),true,"Items not available in cart.");
+    }
+
     private void clickOnCartButton(){
         cartBadge.clickOnCartBtn();
         logger.info("Clicked on cart icon button");
@@ -208,8 +219,12 @@ public class CartPageTest extends LoginTest{
         logger.info("Checkout button is visible/displayed");
     }
 
-    private void clickOnCheckoutBtnFunctionalityAssertion(){
+    private void clickOnCheckoutButton(){
+        cartPage.clickOnCheckOutBtn();
         logger.info("Clicked on checkout button");
+    }
+
+    private void assertClickOnCheckoutBtn(){
         Assert.assertEquals(checkoutStepOnePage.getCurrentPageUrl(),checkoutStepOnePage.checkoutStepOnePageUrl,"user not directs to checkoutStepOnePage. Expected page url is :" + checkoutStepOnePage.checkoutStepOnePageUrl + "Actual current page url is :" + checkoutStepOnePage.getCurrentPageUrl());
         Assert.assertEquals(checkoutStepOnePage.getCheckOutStepOnePageTitle(),checkoutStepOnePage.getCheckoutStepOnePageUrlTitle,"Page Title is mismatched. expected" + checkoutStepOnePage.getCheckoutStepOnePageUrlTitle);
         logger.info("Successfully directs to checkout one page by clicking on checkout button");
