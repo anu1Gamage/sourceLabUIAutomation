@@ -1,47 +1,86 @@
 package testCases;
 
 import org.testng.Assert;
+import org.testng.ITestContext;
+import org.testng.ITestResult;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pageObject.CheckoutCompletePage;
 import pageObject.CheckoutStepTwoPage;
 import pageObject.InventoryPage;
+import utilities.TestCaseMetadata;
+
+import java.lang.reflect.Method;
 
 public class CheckoutStepTwoTestPage extends BaseClass{
 
     protected static CheckoutStepTwoPage checkoutStepTwoPage;
     protected static CheckoutCompletePage checkoutCompletePage;
-
     protected static InventoryPage inventoryPage;
 
-    @Test
-    public void verifyUserClickOnFinishOrder(){
-       logger.info("************** TC_2.23 Test Case Started **************");
-       logger.info("Test Case : Validate that user finish order by click on Finish button in checkoutStepTwo page");
+    @BeforeMethod
+    public void setUp(ITestContext context) {
+        context.setAttribute("module", "checkOutTwoPageMetaData");
+    }
+
+    @Test(testName = "TC_5.1",
+          priority = 26,
+          dependsOnMethods = "testCases.CheckOutOnePageTest.verifyProvideUserInfoAndCheckout"
+    )
+    public void verifyUserClickOnFinishOrder(ITestContext context){
+        String testCaseID = getTestCaseId();
+        String module = context.getAttribute("module").toString();
+        String scenario = TestCaseMetadata.getScenario(testCaseID, module);
+        String description = TestCaseMetadata.getDescription(testCaseID, module);
+        String priority = TestCaseMetadata.getPriority(testCaseID, module);
+        String severity = TestCaseMetadata.getSeverity(testCaseID, module);
+        logger.info("Test scenario: " + scenario + ", Priority: " + priority + ", Severity: " + severity);
+        logger.info("*********** " + testCaseID + " " + description + " started ************");
        try{
            assertCheckoutOverview();
            verifyFinishButtonIsDisplay();
            verifyClickOnFinishBtn();
-           logger.info("TC_2.23 test case passed");
        }catch(Exception e){
            logger.error("Exception encountered",e);
-           logger.info("TC_2.23 Test Case failed due to exception");
+           throw e;
        }
-       logger.info("*********** TC_2.23 Test case finished *****************");
+       logger.info("*********** " +testCaseID+  " test case finished *****************");
     }
 
-    public void verifyUserCancelOrderBeforeFinish(){
-        logger.info("************** TC_2.24 Test Case Started **************");
-        logger.info("Test Case : Validate that user cancel order by click on Cancel button in checkoutStepTwo page");
+    @Test(testName ="TC_5.2",
+          priority = 27,
+          dependsOnMethods = "testCases.CheckOutOnePageTest.verifyProvideUserInfoAndCheckout"
+    )
+    public void verifyUserCancelOrderBeforeFinish(ITestContext context){
+        String testCaseID = getTestCaseId();
+        String module = context.getAttribute("module").toString();
+        String scenario = TestCaseMetadata.getScenario(testCaseID, module);
+        String description = TestCaseMetadata.getDescription(testCaseID, module);
+        String priority = TestCaseMetadata.getPriority(testCaseID, module);
+        String severity = TestCaseMetadata.getSeverity(testCaseID, module);
+        logger.info("Test scenario: " + scenario + ", Priority: " + priority + ", Severity: " + severity);
+        logger.info("*********** " + testCaseID + " " + description + " started ************");
         try{
             assertCheckoutOverview();
             verifyCheckoutStepTwoPageCancelButtonIsDisplay();
             clickOnCheckoutStepTwoPageCancelBtn();
-            logger.info("TC_2.24 Test case passed");
         }catch(Exception e){
             logger.error("Exception encountered",e);
-            logger.info("TC_2.24 Test Case failed due to exception");
+            throw e;
         }
-        logger.info("*********** TC_2.24 Test case finished *****************");
+        logger.info("*********** " +testCaseID+ " test case execution finished *****************");
+    }
+
+    private String getTestCaseId() {
+        try {
+            String methodName = new Throwable().getStackTrace()[1].getMethodName();
+            Method method = this.getClass().getMethod(methodName);
+            Test testAnnotation = method.getAnnotation(Test.class);
+            return testAnnotation.testName();
+        } catch (NoSuchMethodException e) {
+            logger.error("Failed to fetch test case ID from @Test annotation.", e);
+            return "UnknownTestCaseID";
+        }
     }
 
     public void assertCheckoutOverview() {

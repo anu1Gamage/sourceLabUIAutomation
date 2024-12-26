@@ -93,17 +93,25 @@ public class DataProviders{
     public static Object[][] getUserCheckoutInfo(){
         return new Object[][]{
                 //provide first,last name and postal code
-                {"jone","jone","AD100023"},
+                {"TC_4.1","jone","jone","AD100023",true,null},
                 //fist and last name , postal code not given
-                {"jone","jone",null},
+                {"TC_4.2","jone","jone",null,false,"Error: Postal Code is required"},
                 //only first name and postal code provided
-                {"jone",null,"AD100023"},
+                {"TC_4.3","jone",null,"AD100023",false,"Error: Last Name is required"},
                 //lastname and postal code provided
-                {null,"jone","AD100023"},
+                {"TC_4.4",null,"jone","AD100023",false,"Error: First Name is required"},
                 //first ,last names and postal code not provided
-                {null,null,null},
+                {"TC_4.5",null,null,null,false,"Error: First Name is required"},
                 //Empty strings
-                {"","",""}
+                {"TC_4.6","","","",false,"Error: First Name is required"}
+        };
+    }
+
+    @DataProvider(name = "userCheckoutInfo1")
+    public static Object[][] getUserCheckoutInfo1(){
+        return new Object[][]{
+                //provide first,last name and postal code
+                {"TC_4.1","jone","jone","AD100023",true,null}
         };
     }
 

@@ -9,6 +9,12 @@ public class TestCaseMetadata {
     private static JSONObject inventoryPageMetaData;
     private static JSONObject dataDrivenLoginMetaData;
     private  static JSONObject cartPageMetaData;
+
+    private static JSONObject checkOutOnePageMetaData;
+    private static JSONObject checkOutTwoPageMetaData;
+
+    private static JSONObject checkOutCompletePageMetaData;
+
     private static JSONObject e2eTestMetaData;
 
     static {
@@ -17,6 +23,9 @@ public class TestCaseMetadata {
             inventoryPageMetaData = loadMetadata("src/test/resources/testMetadata/inventoryPageTestMetaData.json");
             dataDrivenLoginMetaData = loadMetadata("src/test/resources/testMetadata/dataDrivenLoginTestMetaData.json");
             cartPageMetaData = loadMetadata("src/test/resources/testMetadata/cartPageTestMetaData.json");
+            checkOutOnePageMetaData = loadMetadata("src/test/resources/testMetadata/checkOutOnePageTestMetaData.json");
+            checkOutTwoPageMetaData = loadMetadata("src/test/resources/testMetadata/checkOutTwoPageTestMetaData.json");
+            checkOutCompletePageMetaData = loadMetadata("src/test/resources/testMetadata/checkOutCompletePageTestMetaData.json");
         } catch (Exception e) {
             // Log the error or throw a more descriptive exception
             e.printStackTrace();
@@ -64,6 +73,12 @@ public class TestCaseMetadata {
                 return dataDrivenLoginMetaData;
             case "cartPage":
             return cartPageMetaData;
+            case "checkOutOnePageMetaData":
+                return checkOutOnePageMetaData;
+            case "getCheckOutTwoPageMetaData":
+                return checkOutTwoPageMetaData;
+            case "checkOutCompletePageMetaData":
+                return checkOutCompletePageMetaData;
             default:
                 System.err.println("Invalid module name: " + module + ". Returning empty metadata.");
                 return new JSONObject(); // Return empty JSON to prevent crashes

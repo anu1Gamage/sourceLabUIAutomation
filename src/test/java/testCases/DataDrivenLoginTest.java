@@ -24,7 +24,9 @@ public class DataDrivenLoginTest extends BaseClass{
         context.setAttribute("module", "dataDrivenLogin");
     }
 
-@Test (testName = "TC_1.1", dataProvider = "loginData",groups = {"Functional","Sanity","E2E"},dataProviderClass = DataProviders.class)
+@Test (dataProvider = "loginData",
+        groups = {"Functional","Sanity","E2E"},
+        dataProviderClass = DataProviders.class)
     public void DataDrivenLoginTest(String testCaseId, String userName, String password, boolean successExpected, String ExpectedError){
     logger.info("******** Login Scenario : "+ testCaseId +" Data driven test case execution started *********** ");
         //Initialize LoginPage object

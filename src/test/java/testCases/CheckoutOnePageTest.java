@@ -1,66 +1,169 @@
 package testCases;
 
 import org.testng.Assert;
+import org.testng.ITestContext;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pageObject.CartBadge;
 import pageObject.CartPage;
 import pageObject.CheckoutStepOnePage;
 import pageObject.CheckoutStepTwoPage;
 import utilities.DataProviders;
+import utilities.TestCaseMetadata;
+
+import java.lang.reflect.Method;
 
 public class CheckoutOnePageTest extends BaseClass{
     protected CartBadge cartBadge;
     protected CartPage cartPage;
     protected static CheckoutStepOnePage checkoutStepOnePage;
     protected static CheckoutStepTwoPage checkoutStepTwoPage;
-    @Test(dependsOnMethods = "testCases.CartPageTest.verifyCheckoutButtonInCartPageWithCartItems")
-    public void verifyProvideUserInfoAndCheckout(String firstName,String lastName, String postalCode){
-        logger.info("**************** TC_2.20 Test case Started ****************");
-        logger.info("Test Case: Validate that user successfully provide user information for checkout and continue successfully");
 
+   String expectedPageURL = "https://www.saucedemo.com/checkout-step-two.html";
+
+    @BeforeMethod
+    public void setUp(ITestContext context) {
+        context.setAttribute("module", "checkOutOnePage");
+    }
+
+    @Test(testName = "TC_4.1",
+          priority = 21,
+          dependsOnMethods = "testCases.CartPageTest.verifyCheckoutButtonInCartPageWithCartItems")
+    public void verifyProvideUserInfoAndCheckout(ITestContext context){
+        String testCaseID = getTestCaseId();
+        String module = context.getAttribute("module").toString();
+        String scenario = TestCaseMetadata.getScenario(testCaseID, module);
+        String description = TestCaseMetadata.getDescription(testCaseID, module);
+        String priority = TestCaseMetadata.getPriority(testCaseID, module);
+        String severity = TestCaseMetadata.getSeverity(testCaseID, module);
+        logger.info("Test scenario: " + scenario + ", Priority: " + priority + ", Severity: " + severity);
+        logger.info("*********** " + testCaseID + " " + description + " started ************");
         try{
             assertCheckoutOnePageTitle();
-            //sendUserInfoForCheckout();
+            verifyCheckoutUserInfoFieldsAreDisplayed();
+            CleanCheckOutInputFieldsBefore();
+            sendCheckoutUserInfo();
             assertContinueButtonVisibility();
             clickOnContinueButton();
-            logger.info("TC_2.20 test case passed");
         }catch(Exception e){
             logger.error("Exception is encountered",e);
-            logger.info("TC_2.20 test case failed");
+            throw e;
         }
-        logger.info("*********** TC_2.20 Test case finished ****************");
+        logger.info("***********" +testCaseID+ "test execution finished ****************");
     }
 
-    @Test
-    public void verifyUserCancelOrderWithoutProvideUserInfoToCheckout(){
-        logger.info("**************** TC_2.21 Test case Started ****************");
-        logger.info("Test Case: Validate that user successfully cancel order checkout by not providing user info and click on cancel button");
+    @Test(testName ="TC_4.2",
+          priority = 22,
+          dependsOnMethods = "testCases.CartPageTest.verifyCheckoutButtonInCartPageWithCartItems"
+    )
+    public void verifyUserCancelOrderWithoutProvideUserInfoToCheckout(ITestContext context){
+        String testCaseID = getTestCaseId();
+        String module = context.getAttribute("module").toString();
+        String scenario = TestCaseMetadata.getScenario(testCaseID, module);
+        String description = TestCaseMetadata.getDescription(testCaseID, module);
+        String priority = TestCaseMetadata.getPriority(testCaseID, module);
+        String severity = TestCaseMetadata.getSeverity(testCaseID, module);
+        logger.info("Test scenario: " + scenario + ", Priority: " + priority + ", Severity: " + severity);
+        logger.info("*********** " + testCaseID + " " + description + " started ************");
         try{
             assertCheckoutOnePageTitle();
-            assertCancelButtonVisibility();
-            clickOnCancelButton();
-            logger.info("TC_2.21 test case passed");
-        }catch(Exception e){
-            logger.error("Exception is encountered",e);
-            logger.info("TC_2.21 test case failed");
-        }
-        logger.info("*********** TC_2.21 Test case finished ****************");
-    }
-
-@Test(dataProvider ="userCheckoutInfo",dataProviderClass = DataProviders.class)
-    public void verifyUserCancelCheckoutAfterProvideUserInfo(String firstName, String lastName, String postalCode){
-        logger.info("**************** TC_2.22 Test case Started ****************");
-        logger.info("Test Case: Validate that user successfully cancel order checkout by not providing user info and click on cancel button");
-        try{
-            assertCheckoutOnePageTitle();
-            enterUserInformation(firstName, lastName, postalCode);
+            CleanCheckOutInputFieldsBefore();
             assertCancelButtonVisibility();
             clickOnCancelButton();
         }catch(Exception e){
             logger.error("Exception is encountered",e);
-            logger.info("TC_2.22 test case failed");
+            throw e;
         }
-        logger.info("*********** TC_2.22 Test case finished ****************");
+        logger.info("*********** " +testCaseID+ "test case execution finished ****************");
+    }
+
+@Test(testName = "TC_4.3",
+      priority = 23,
+      dependsOnMethods = "testCases.CartPageTest.verifyCheckoutButtonInCartPageWithCartItems"
+)
+    public void verifyUserCancelCheckoutAfterProvideUserInfo(ITestContext context){
+        String testCaseID = getTestCaseId();
+        String module = context.getAttribute("module").toString();
+        String scenario = TestCaseMetadata.getScenario(testCaseID,module);
+        String description = TestCaseMetadata.getDescription(testCaseID,module);
+        String priority = TestCaseMetadata.getPriority(testCaseID, module);
+        String severity = TestCaseMetadata.getSeverity(testCaseID, module);
+
+        logger.info("Test scenario: " + scenario + ", Priority: " + priority + ", Severity: " + severity);
+        logger.info("*********** " + testCaseID + " " + description + " started ************");
+    try{
+            assertCheckoutOnePageTitle();
+            verifyCheckoutUserInfoFieldsAreDisplayed();
+            sendCheckoutUserInfo();
+            assertCancelButtonVisibility();
+            clickOnCancelButton();
+        }catch(Exception e){
+            logger.error("Exception is encountered",e);
+            throw e;
+        }
+        logger.info("*********** " +testCaseID+ "test execution finished ****************");
+    }
+
+
+    @Test(testName = "TC_4.4",
+          priority = 24
+    )
+    public void verifyUserContinueCheckOutAfterCancelErrorMsg(ITestContext context, String testCaseId, String firstName, String lastName,
+                                                              String postalCode, boolean successExpected, String ExpectedError){
+        String testCaseID = getTestCaseId();
+        String module = context.getAttribute("module").toString();
+        String scenario = TestCaseMetadata.getScenario(testCaseID,module);
+        String description = TestCaseMetadata.getDescription(testCaseID,module);
+        String priority = TestCaseMetadata.getPriority(testCaseID, module);
+        String severity = TestCaseMetadata.getSeverity(testCaseID, module);
+
+        logger.info("Test scenario: " + scenario + ", Priority: " + priority + ", Severity: " + severity);
+        logger.info("*********** " + testCaseID + " " + description + " started ************");
+
+        try{
+            if(firstName != null){
+                checkoutStepOnePage.setFirstNameForCheckout(firstName);
+            }
+            if(lastName != null){
+                checkoutStepOnePage.setLastNameForCheckout(lastName);
+            }
+            if(postalCode != null){
+                checkoutStepOnePage.setPostalCodeForCheckOut(postalCode);
+            }
+            assertContinueButtonVisibility();
+            checkoutStepOnePage.clickOnCheckOutStepOnePageContinueBtn();
+
+
+            if(successExpected){
+                String actualDirectedPageURL = checkoutStepTwoPage.getCurrentPageUrl();
+                Assert.assertEquals(actualDirectedPageURL,expectedPageURL,"After click on CheckOutOnePage continue button, Actual directed page url and expected page url is different");
+            }else{
+                String ActualErrorMessage = checkoutStepOnePage.getErrorMessage();
+                Assert.assertEquals(ActualErrorMessage,ExpectedError,"Error massage is not matched with expected Error Message");
+                assertClickOnCancelButtonOFErrorMsg();
+                fillUnfilledCheckoutInputFields(firstName, lastName, postalCode);
+                assertContinueButtonVisibility();
+                checkoutStepOnePage.clickOnCheckOutStepOnePageContinueBtn();
+                assertContinueButtonVisibility();
+            }
+        }catch(Exception e){
+            logger.error("Test failed due to exception: ", e);
+            Assert.fail("Test case failed due to unexpected exception: " + e.getMessage());
+        }
+    }
+
+    // ToDo provide correct user info and continue After receive error message but not click on cancel button on error message  Test Case
+
+    private String getTestCaseId() {
+        try {
+            String methodName = new Throwable().getStackTrace()[1].getMethodName();
+            Method method = this.getClass().getMethod(methodName);
+            Test testAnnotation = method.getAnnotation(Test.class);
+            return testAnnotation.testName();
+        } catch (NoSuchMethodException e) {
+            logger.error("Failed to fetch test case ID from @Test annotation.", e);
+            return "UnknownTestCaseID";
+        }
     }
 
     public void assertCheckoutOnePageTitle(){
@@ -70,13 +173,15 @@ public class CheckoutOnePageTest extends BaseClass{
         logger.info("CheckoutStepOnePageTitle is available");
     }
 
-    private void enterUserInformation(String firstName, String lastName, String postalCode) {
+    /*private void enterUserInformation(String firstName, String lastName, String postalCode) {
         if (firstName != null) checkoutStepOnePage.setFirstNameForCheckout(firstName);
         if (lastName != null) checkoutStepOnePage.setLastNameForCheckout(lastName);
         if (postalCode != null) checkoutStepOnePage.setPostalCodeForCheckOut(postalCode);
         checkoutStepOnePage.clickOnCheckOutStepOnePageContinueBtn();
         logger.info("User clicked on checkout step one Continue button.");
     }
+
+     */
 
     public void assertContinueButtonVisibility(){
         boolean actual = checkoutStepOnePage.isContinueBtnOnCheckOutStepOnePageDisplay();
@@ -107,5 +212,64 @@ public class CheckoutOnePageTest extends BaseClass{
         Assert.assertEquals(actualPageUrl,expectedPageUrl,"actual page and expected page is mis matched.");
         logger.info("Successfully cancel the order checkout");
     }
+
+    public void sendCheckoutUserInfo() {
+        checkoutStepOnePage.setFirstNameForCheckout(properties.getProperty("firstName"));
+        checkoutStepOnePage.setLastNameForCheckout(properties.getProperty("lastName"));
+        checkoutStepOnePage.setPostalCodeForCheckOut(properties.getProperty("postalCode"));
+    }
+
+    public void verifyCheckoutUserInfoFieldsAreDisplayed() {
+        boolean isFirstNameFieldDisplayed = checkoutStepOnePage.isFirstNameFieldDisplay();
+        Assert.assertTrue(isFirstNameFieldDisplayed, "FirstName field is not displayed on the Checkout Step One page");
+
+        boolean isLastNameFieldDisplayed = checkoutStepOnePage.isLastNameFieldDisplay();
+        Assert.assertTrue(isLastNameFieldDisplayed, "LastName field is not displayed on the Checkout Step One page");
+
+        boolean isPostalCodeFieldDisplayed = checkoutStepOnePage.isPostalCodeFieldDisplay();
+        Assert.assertTrue(isPostalCodeFieldDisplayed, "PostalCode field is not displayed on the Checkout Step One page");
+    }
+
+    public void CleanCheckOutInputFieldsBefore(){
+        String firstNameValue = CheckoutStepOnePage.getAttributeValueOfFirstNameField();
+        String lastNameValue = CheckoutStepOnePage.getAttributeValueOfLastNameField();
+        String postalCodeValue = CheckoutStepOnePage.getAttributeValueOfPostalCodeField();
+
+        boolean isFirstNameFilled  = !firstNameValue.trim().isEmpty();
+        boolean isLastNameFilled = !lastNameValue.trim().isEmpty();
+        boolean isPostalCodeValue = !postalCodeValue.trim().isEmpty();
+
+        if(isFirstNameFilled || isLastNameFilled || isPostalCodeValue ){
+            logger.warn("At least one field is filled");
+            CheckoutStepOnePage.clearInputField();
+        }else {
+            logger.info("All fields are empty");
+        }
+    }
+
+
+    public void fillUnfilledCheckoutInputFields(String firstName, String lastName, String postalCode){
+
+        if (checkoutStepOnePage.getAttributeValueOfFirstNameField().trim().isEmpty() && firstName != null) {
+            checkoutStepOnePage.setFirstNameForCheckout(firstName);
+        }
+        if (checkoutStepOnePage.getAttributeValueOfLastNameField().trim().isEmpty() && lastName != null) {
+            checkoutStepOnePage.setLastNameForCheckout(lastName);
+        }
+        if (checkoutStepOnePage.getAttributeValueOfPostalCodeField().trim().isEmpty() && postalCode != null) {
+            checkoutStepOnePage.setPostalCodeForCheckOut(postalCode);
+        }
+    }
+
+
+
+
+    private void assertClickOnCancelButtonOFErrorMsg(){
+        checkoutStepOnePage.clickOnErrorMessageCancelButton();
+        logger.info("Clicked on cancel button of error message");
+        boolean isErrorDisplay = checkoutStepOnePage.isErrorMessageDisplay();
+        Assert.assertEquals(isErrorDisplay,false,"Error Message not successfully closed");
+    }
+
 
 }

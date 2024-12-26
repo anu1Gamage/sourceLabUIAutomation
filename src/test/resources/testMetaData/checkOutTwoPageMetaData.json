@@ -1,0 +1,24 @@
+{
+  "TC_5.1": {
+    "description": "Validate that user finish order by click on Finish button in checkoutStepTwo page",
+    "priority": "High",
+    "Severity": "High",
+    "author": "Anoja",
+    "tags": [
+      "Smoke",
+      "Functional",
+      "E2E"
+    ]
+  },
+  "TC_5.2": {
+    "description": "Validate that user cancel order by click on Cancel button in checkoutStepTwo page",
+    "priority": "High",
+    "Severity": "High",
+    "author": "Anoja",
+    "tags": [
+      "Smoke",
+      "Functional",
+      "E2E"
+    ]
+  }
+}

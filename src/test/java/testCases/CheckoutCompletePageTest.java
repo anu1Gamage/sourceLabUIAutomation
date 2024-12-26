@@ -1,30 +1,59 @@
 package testCases;
 
 import org.testng.Assert;
+import org.testng.ITestContext;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import utilities.TestCaseMetadata;
+
+import java.lang.reflect.Method;
 
 import static testCases.CheckoutStepTwoTestPage.checkoutCompletePage;
 import static testCases.CheckoutStepTwoTestPage.inventoryPage;
 
 public class CheckoutCompletePageTest extends BaseClass{
 
-@Test
-    public void verifyUserBackToInventoryPage(){
-        logger.info("************** TC_2.25 Test Case Started **************");
-        logger.info("Test Case: Validate that user can successfully back to inventory page by click on Back To Home button in CheckoutComplete page");
+    @BeforeMethod
+    public void setUp(ITestContext context) {
+        context.setAttribute("module", "checkOutTwoPageMetaData");
+    }
+
+    @Test(testName ="TC_6.1"
+
+    )
+    public void verifyUserBackToInventoryPage(ITestContext context){
+        String testCaseID = getTestCaseId();
+        String module = context.getAttribute("module").toString();
+        String scenario = TestCaseMetadata.getScenario(testCaseID, module);
+        String description = TestCaseMetadata.getDescription(testCaseID, module);
+        String priority = TestCaseMetadata.getPriority(testCaseID, module);
+        String severity = TestCaseMetadata.getSeverity(testCaseID, module);
+        logger.info("Test scenario: " + scenario + ", Priority: " + priority + ", Severity: " + severity);
+        logger.info("*********** " + testCaseID + " " + description + " started ************");
         try{
-            checkoutCompletePage.clickOnCheckOutCompletePageBackToProductBtn();
-            String actualPageUrl = inventoryPage.getCurrentPageUrl();
-            String expectedPageUrl = inventoryPage.inventoryPageUrl;
-            Assert.assertEquals(actualPageUrl,expectedPageUrl,"Actual page is differ from expected destination page url. Expected page is:"+expectedPageUrl+"Actual page url is:"+actualPageUrl);
-            logger.info("TC_2.25 Test case Passed.");
+            assertCheckoutCompletePageHeaderMessage();
+            verifyCheckoutCompletePageIconVisibility();
+            verifyCheckoutCompletionParagraph();
+            clickOnCheckOutCompletePageBackToProductsButton();
+            assertClickOnCheckOutCompletePageBackToProductsButton();
         }catch(Exception e){
             logger.error("Exception encountered",e);
-            logger.info("TC_2.25 Test case Failed due to exception");
         }
-        logger.info("******************* TC_2.25 test case finished *****************");
+        logger.info("******************* " +testCaseID+  " test case execution finished *****************");
     }
-    
+
+    private String getTestCaseId() {
+        try {
+            String methodName = new Throwable().getStackTrace()[1].getMethodName();
+            Method method = this.getClass().getMethod(methodName);
+            Test testAnnotation = method.getAnnotation(Test.class);
+            return testAnnotation.testName();
+        } catch (NoSuchMethodException e) {
+            logger.error("Failed to fetch test case ID from @Test annotation.", e);
+            return "UnknownTestCaseID";
+        }
+    }
+
     public void assertCheckoutCompletePageHeaderMessage(){
         String actualHeaderMessage = checkoutCompletePage.getCheckOutCompletePageHeader();
         String expectedHeaderMessage = checkoutCompletePage.completePageHeader;
@@ -45,4 +74,16 @@ public class CheckoutCompletePageTest extends BaseClass{
         logger.info("Order completion message paragraph displayed.");
         logger.info("Oder successfully completed");
     }
+
+    public void clickOnCheckOutCompletePageBackToProductsButton(){
+        checkoutCompletePage.clickOnCheckOutCompletePageBackToProductBtn();
+        logger.info("Clicked on checkout complete page back to product button");
+    }
+
+    public void assertClickOnCheckOutCompletePageBackToProductsButton(){
+        String actualPageUrl = inventoryPage.getCurrentPageUrl();
+        String expectedPageUrl = inventoryPage.inventoryPageUrl;
+        Assert.assertEquals(actualPageUrl,expectedPageUrl,"Actual page is differ from expected destination page url. Expected page is:"+expectedPageUrl+"Actual page url is:"+actualPageUrl);
+    }
+
 }

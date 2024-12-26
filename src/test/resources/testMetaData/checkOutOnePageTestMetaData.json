@@ -1,0 +1,47 @@
+{
+  "TC_4.1": {
+    "description": "Validate that user successfully provide user information for checkout and continue successfully",
+    "priority": "High",
+    "Severity": "High",
+    "author": "Anoja",
+    "tags": [
+      "Smoke",
+      "Functional",
+      "E2E"
+    ]
+  },
+  "TC_4.2": {
+    "description": "Validate that user successfully cancel order checkout by not providing user info and click on cancel button",
+    "priority": "High",
+    "Severity": "High",
+    "author": "Anoja",
+    "tags": [
+      "Smoke",
+      "Functional",
+      "E2E"
+    ]
+  },
+  "TC_4.3": {
+    "description": "Validate that user successfully cancel order checkout by providing user info and click on cancel button",
+    "priority": "High",
+    "Severity": "High",
+    "author": "Anoja",
+    "tags": [
+      "Smoke",
+      "Functional",
+      "E2E"
+    ]
+  },
+  "TC_4.4": {
+    "description": "Validate that user cancel error message and provide correct user info and continue to checkout successfully",
+    "priority": "High",
+    "Severity": "High",
+    "author": "Anoja",
+    "tags": [
+      "Smoke",
+      "Functional",
+      "E2E"
+    ]
+  }
+
+}

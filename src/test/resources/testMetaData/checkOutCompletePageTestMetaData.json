@@ -1,0 +1,16 @@
+{
+"TC_5.2": {
+"description": "Validate that user can successfully back to inventory page by click on Back To Home button in CheckoutComplete page",
+"priority": "High",
+"Severity": "High",
+"author": "Anoja",
+"tags": [
+"Smoke",
+"Functional",
+"E2E"
+]
+}
+}
+
+
+
